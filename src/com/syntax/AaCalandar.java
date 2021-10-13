@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -25,7 +26,7 @@ public class AaCalandar {
         driver.manage().timeouts().implicitlyWait(9, TimeUnit.SECONDS);
     }
 
-    @Test (groups = {"AaTest"})
+    @Test(groups = {"AaTest"})
     public void selectFlight() {
 
         //click on departure calender
@@ -86,15 +87,34 @@ public class AaCalandar {
             }
         }
 
-      //  WebElement destination = driver.findElement(By.xpath("//input[@id='reservationFlightSearchForm.destinationAirport']"));
-     //   destination.sendKeys("Istanbul");
+        WebElement destinationSearchButton = driver.findElement(By.xpath("(//a[@class='widget aaAirportLookup'])[2]"));
+        destinationSearchButton.click();
 
-     //   WebElement searchButton = driver.findElement(By.xpath("//input[@id='flightSearchForm.button.reSubmit']"));
-     //   searchButton.click();
+        WebElement selectCountry = driver.findElement(By.cssSelector("select#countryCode"));
+        Select select = new Select(selectCountry);
+        select.selectByVisibleText("United States");
+
+
+        WebElement selectState = driver.findElement(By.cssSelector("select#stateCode"));
+        select = new Select(selectState);
+        select.selectByVisibleText("Georgia");
+        List<WebElement> airportCodes = driver.findElements(By.xpath("//table[@id='airportsSection']/tbody/tr/td[3]/a/span[1]"));
+        for (WebElement airport : airportCodes) {
+            if (airport.getText().equals("ATL")) {
+                airport.click();
+                break;
+            }
+
+        }
+
+        WebElement searchButton = driver.findElement(By.id("flightSearchForm.button.reSubmit"));
+        searchButton.click();
+        //   WebElement searchButton = driver.findElement(By.xpath("//input[@id='flightSearchForm.button.reSubmit']"));
+        //   searchButton.click();
     }
 
     @AfterMethod(enabled = false, alwaysRun = false)
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 }
