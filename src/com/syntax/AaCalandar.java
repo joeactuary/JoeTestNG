@@ -18,7 +18,7 @@ public class AaCalandar {
 
 
     @BeforeMethod(alwaysRun = true)
-    public void openBrowser() throws InterruptedException {
+    public void openBrowser() {
         String url = "https://www.aa.com/homePage.do";
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver94.exe");
         driver = new ChromeDriver();
@@ -29,64 +29,53 @@ public class AaCalandar {
     @Test(groups = {"AaTest"})
     public void selectFlight() {
 
-        //click on departure calender
-        WebElement departDatebox = driver.findElement(By.xpath("//label[@for='aa-leavingOn']/following-sibling::button"));
-        departDatebox.click();
+        //**************  Puts Departure Date    ************************************
 
-        //select the month
+       WebElement expandCalendar = driver.findElement(By.xpath("(//button[@class='ui-datepicker-trigger'])[1]"));
+        expandCalendar.click();
+
         WebElement monthTitle = driver.findElement(By.xpath("(//div[@id='ui-datepicker-div']/div/div/div/span)[1]"));
-        String monthText = monthTitle.getText();
 
-
-//in loop find the wanted mont for departure==
-
-        while (!monthText.equals("January")) {
-
-
-            WebElement nextButton = driver.findElement(By.xpath("//a[@data-handler='next']"));
-            nextButton.click();         //if it s not January click
-
+        while (! monthTitle.getText().equals("January")) {
+            WebElement nextMonthButton = driver.findElement(By.xpath("//a[@data-handler='next']"));
+            nextMonthButton.click();
             monthTitle = driver.findElement(By.xpath("(//div[@id='ui-datepicker-div']/div/div/div/span)[1]"));
-            monthText = monthTitle.getText();
-
         }
 
         List<WebElement> depDates = driver.findElements(By.xpath("(//div[@id='ui-datepicker-div']/div/table)[1]/tbody/tr/td"));
 
         for (WebElement depDate : depDates) {
 
-            if (depDate.getText().equals("2")) { //loop through till find day 2
+            if (depDate.getText().equals("12")) {
                 depDate.click();
                 break;
             }
         }
 
-        //arriving callender button;
 
-        WebElement arrMonth = driver.findElement(By.xpath("//div[@id='flightSearchFormSubmitButton']/preceding-sibling::div[2]/div/button"));
-        arrMonth.click();
+        //**************  Puts Arrival Date    ************************************
+        expandCalendar = driver.findElement(By.xpath("(//button[@class='ui-datepicker-trigger'])[2]"));
+        expandCalendar.click();
 
-        //arriving month title
-        WebElement arrMonthTitle = driver.findElement(By.xpath("(//div[@id='ui-datepicker-div']/div/div/div/span)[1]"));
-        String getArr = arrMonthTitle.getText();
+        monthTitle = driver.findElement(By.xpath("(//div[@id='ui-datepicker-div']/div/div/div/span)[2]"));
 
-        while (!getArr.equalsIgnoreCase("March")) {
-            WebElement nextButton = driver.findElement(By.xpath("//a[@data-handler='next']"));
-            nextButton.click();         //if it s not March click
-            arrMonthTitle = driver.findElement(By.xpath("(//div[@id='ui-datepicker-div']/div/div/div/span)[1]"));
-            getArr = arrMonthTitle.getText();
-
-
+        while (! monthTitle.getText().equals("February")) {
+            WebElement nextMonthButton = driver.findElement(By.xpath("//a[@data-handler='next']"));
+            nextMonthButton.click();
+            monthTitle = driver.findElement(By.xpath("(//div[@id='ui-datepicker-div']/div/div/div/span)[1]"));
         }
-        List<WebElement> arrDates = driver.findElements(By.xpath("(//div[@id='ui-datepicker-div']/div/table)[1]/tbody/tr/td"));
-        for (WebElement arrDate : arrDates) {
-            if (arrDate.getText().equals("14")) {
-                arrDate.click();
-                break;
 
+        depDates = driver.findElements(By.xpath("(//div[@id='ui-datepicker-div']/div/table)[2]/tbody/tr/td"));
+
+        for (WebElement depDate : depDates) {
+
+            if (depDate.getText().equals("23")) {
+                depDate.click();
+                break;
             }
         }
 
+//**************  Puts Destination    ************************************
         WebElement destinationSearchButton = driver.findElement(By.xpath("(//a[@class='widget aaAirportLookup'])[2]"));
         destinationSearchButton.click();
 
@@ -106,15 +95,15 @@ public class AaCalandar {
             }
 
         }
-
+        //**************************     Final Selection to show search results    ***************************
         WebElement searchButton = driver.findElement(By.id("flightSearchForm.button.reSubmit"));
         searchButton.click();
-        //   WebElement searchButton = driver.findElement(By.xpath("//input[@id='flightSearchForm.button.reSubmit']"));
-        //   searchButton.click();
+
     }
 
-    @AfterMethod(enabled = false, alwaysRun = false)
-    public void tearDown() {
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() throws InterruptedException {
+        Thread.sleep(15000);   //To see results
         driver.quit();
     }
 }
