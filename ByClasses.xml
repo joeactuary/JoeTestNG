@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/goldm/IdeaProjects/JoeTestNG">
+        <classes>
+            <class name="com.syntax.LoginTest">
+                <methods>
+                    <include name="ValidLogin"/>
+                    <include name="validationofTitle"/>
+                </methods>
+            </class>
+            <class name="com.syntax.TestngClass">
+                <methods>
+                    <include name="zfirstGTest"/>
+                    <include name="secondTest"/>
+                    <include name="thirdTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
