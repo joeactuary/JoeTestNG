@@ -4,11 +4,11 @@
     <test verbose="2" preserve-order="true" name="C:/Users/goldm/IdeaProjects/JoeTestNG">
         <groups>
             <run>
-                <include name="AaTest"/>
+                <include name="Uites"/>
             </run>
         </groups>
         <packages>
-            <package name="com.syntax"/>
+                     <package name="com.uitespractice.test"/>
         </packages>
     </test>
 </suite>

@@ -3,12 +3,12 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="C:/Users/goldm/IdeaProjects/JoeTestNG/src/com/syntax">
         <classes>
-            <class name="com.syntax.LoginTest">
+            <class name="goldman.LoginTest">
                 <methods>
                     <include name="ValidLogin"/>
                 </methods>
             </class>
-            <class name="com.syntax.TestngClass">
+            <class name="goldman.TestngClass">
                 <methods>
                     <include name="zfirstGTest"/>
                     <include name="secondTest"/>

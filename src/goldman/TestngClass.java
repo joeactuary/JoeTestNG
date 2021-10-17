@@ -1,4 +1,4 @@
-package com.syntax;
+package goldman;
 
 import org.testng.annotations.*;
 
